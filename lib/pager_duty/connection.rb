@@ -14,6 +14,9 @@ module PagerDuty
     class UnauthorizedError < RuntimeError
     end
 
+    class ForbiddenError < RuntimeError
+    end
+
     class FileNotFoundError < RuntimeError
     end
 
@@ -28,6 +31,17 @@ module PagerDuty
         response = @app.call env
         if response.status == 401
           raise UnauthorizedError, response.env[:url].to_s
+        else
+          response
+        end
+      end
+    end
+
+    class RaiseForbiddenOn403 < Faraday::Middleware
+      def call(env)
+        response = @app.call env
+        if response.status == 403
+          raise ForbiddenError, response.env[:url].to_s
         else
           response
         end
@@ -190,6 +204,7 @@ module PagerDuty
         conn.use RaiseFileNotFoundOn404
         conn.use RaiseRateLimitOn429
         conn.use RaiseUnauthorizedOn401
+        conn.use RaiseForbiddenOn403
 
         conn.adapter  Faraday.default_adapter
       end
