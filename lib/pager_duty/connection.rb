@@ -154,7 +154,7 @@ module PagerDuty
         when Array
           body.map! { |element| parse(element) }
         else
-          raise "Can't parse times of #{body.class}: #{body}"
+          body
         end
       end
 
