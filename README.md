@@ -1,5 +1,7 @@
 # PagerDuty::Connection
 
+[![Tests](https://github.com/technicalpickles/pager_duty-connection/workflows/Tests/badge.svg)](https://github.com/technicalpickles/pager_duty-connection/actions?query=workflow%3ATests)
+
 PagerDuty::Connection is a Ruby wrapper for the [PagerDuty REST API](http://developer.pagerduty.com/documentation/rest)
 
 It has a few design goals:
@@ -140,6 +142,23 @@ That would suggest a constant like Pagerduty::Connection, where the company is c
 > Why the 'connection' thing?
 
 It's an homage to [faraday](https://github.com/lostisland/faraday), which this library uses.
+
+## Testing
+
+This project uses Minitest for testing. To run the test suite:
+
+```bash
+bundle install
+bundle exec rake test
+```
+
+The test suite includes basic smoke tests that verify:
+- Module and class definitions are loaded correctly
+- Connection initialization works with various parameters
+- All public API methods are available
+- Error classes are properly defined
+
+When contributing, please ensure your changes include appropriate tests.
 
 ## Contributing
 
